@@ -1,0 +1,444 @@
+---
+import Base from '../layouts/Base.astro';
+import WaButton from '../components/WaButton.astro';
+
+const masalah = [
+  {
+    judul: 'Tidak tahu apa yang terjadi di lokasi',
+    isi: 'Progres hanya diketahui saat sempat datang. Sisanya menebak.',
+  },
+  {
+    judul: 'Biaya berubah di tengah jalan',
+    isi: 'Penawaran awal terlihat murah, lalu muncul tambahan yang tidak pernah dibahas.',
+  },
+  {
+    judul: 'Tidak jelas siapa yang bertanggung jawab',
+    isi: 'Saat ada masalah, tukang menunjuk mandor, mandor menunjuk vendor.',
+  },
+  {
+    judul: 'Operasional terganggu lebih lama dari perkiraan',
+    isi: 'Jadwal meleset, ruang belum bisa dipakai, aktivitas kerja ikut tertahan.',
+  },
+];
+
+const tahapan = [
+  {
+    n: '01',
+    judul: 'Survey & Pengukuran',
+    isi: 'Kami datang ke lokasi, mengukur, dan memeriksa kondisi ruang sebelum bicara angka.',
+  },
+  {
+    n: '02',
+    judul: 'Layout 2D dan 3D',
+    isi: 'Anda melihat rencana ruang sebelum pekerjaan dimulai, bukan membayangkannya.',
+  },
+  {
+    n: '03',
+    judul: 'RAB dan AHS',
+    isi: 'Anggaran disusun per item pekerjaan, lengkap dengan analisa harga satuan. Anda bisa melihat harga itu terbentuk dari apa.',
+  },
+  {
+    n: '04',
+    judul: 'Surat Penawaran Harga',
+    isi: 'Penawaran resmi dan tertulis. Bukan perkiraan lisan.',
+  },
+  {
+    n: '05',
+    judul: 'Negosiasi dan Kesepakatan',
+    isi: 'Anda dapat menyesuaikan lingkup atau spesifikasi sebelum menyetujui.',
+  },
+  {
+    n: '06',
+    judul: 'Pengawasan Berlapis',
+    isi: 'Tukang dan asisten diawasi mandor. Mandor diawasi Project Manager. Ada penanggung jawab di setiap lapisan.',
+    tandai: true,
+  },
+  {
+    n: '07',
+    judul: 'Dokumentasi Progres Harian',
+    isi: 'Project Manager memperbarui folder berisi foto dan keterangan setiap hari kerja. Anda bisa membukanya kapan saja, dari mana saja.',
+    tandai: true,
+  },
+  {
+    n: '08',
+    judul: 'QC Internal, lalu QC Anda',
+    isi: 'Tim kami memeriksa hasil lebih dulu. Setelah itu giliran Anda. Bila ada yang perlu diperbaiki, kami bereskan.',
+  },
+  {
+    n: '09',
+    judul: 'Laporan, BAST, baru Penagihan',
+    isi: 'Kami menagih setelah Anda menyetujui hasil pekerjaan.',
+    tandai: true,
+  },
+];
+
+// Contoh isi log. Ganti dengan potongan log proyek asli.
+const log = [
+  { hari: 'Hari 01', tgl: '03 Mar', ket: 'Pembongkaran partisi lama, proteksi area', n: 8 },
+  { hari: 'Hari 02', tgl: '04 Mar', ket: 'Marking layout, pemasangan rangka partisi', n: 11 },
+  { hari: 'Hari 03', tgl: '05 Mar', ket: 'Instalasi titik listrik dan data', n: 6 },
+  { hari: 'Hari 04', tgl: '06 Mar', ket: 'Penutupan gypsum, compound tahap satu', n: 9 },
+  { hari: 'Hari 05', tgl: '07 Mar', ket: 'Rangka plafon, pemeriksaan elevasi', n: 7 },
+];
+
+const faq = [
+  {
+    q: 'Berapa kisaran biaya renovasi kantor?',
+    a: 'Biaya bergantung pada luas ruang, lingkup pekerjaan, dan spesifikasi material. Kami tidak memberikan angka sebelum survei, karena perkiraan tanpa pengukuran hampir selalu meleset. Setelah survei, Anda menerima RAB per item pekerjaan beserta analisa harga satuannya.',
+  },
+  {
+    q: 'Berapa lama pengerjaannya?',
+    a: 'ISI: durasi realistis berdasarkan pengalaman. Contoh — renovasi satu ruang kantor umumnya memakan waktu X sampai Y minggu, tergantung lingkup.',
+    kosong: true,
+  },
+  {
+    q: 'Siapa yang mengawasi pekerjaan di lokasi?',
+    a: 'Setiap proyek memiliki mandor di lapangan dan Project Manager yang mengawasi mandor. Project Manager juga menjadi penanggung jawab komunikasi dengan Anda.',
+  },
+  {
+    q: 'Bagaimana saya tahu progres tanpa harus datang?',
+    a: 'Project Manager memperbarui folder dokumentasi setiap hari kerja, berisi foto dan keterangan pekerjaan. Anda mendapat akses dan bisa membukanya kapan saja.',
+  },
+  {
+    q: 'Bagaimana kalau ada perubahan di tengah proyek?',
+    a: 'Perubahan dibahas terlebih dahulu, lalu dihitung ulang dan disampaikan tertulis sebelum dikerjakan. Tidak ada pekerjaan tambahan yang muncul di tagihan tanpa persetujuan Anda.',
+  },
+  {
+    q: 'Bagaimana sistem pembayarannya?',
+    a: 'Penagihan akhir dilakukan setelah Anda memeriksa hasil pekerjaan dan menandatangani berita acara serah terima. ISI: tambahkan skema termin bila ada.',
+    kosong: true,
+  },
+  {
+    q: 'Apakah menerima pekerjaan furnitur satuan?',
+    a: 'Fokus kami adalah renovasi ruang secara menyeluruh. Untuk kebutuhan furnitur satuan, kami sarankan mencari workshop furnitur yang lebih sesuai.',
+  },
+];
+---
+
+<Base>
+  <!-- ══════════ HERO ══════════ -->
+  <header class="border-b border-line">
+    <div class="wrap flex items-center justify-between py-5">
+      <span class="font-display font-extrabold tracking-tight text-lg">
+        TOBO<span class="text-brass">INTERIOR</span>
+      </span>
+      <span class="hidden font-mono text-xs tracking-widest uppercase text-graphite sm:block">
+        Jakarta Selatan &middot; Tangerang Selatan
+      </span>
+    </div>
+  </header>
+
+  <section class="band">
+    <div class="wrap grid gap-14 lg:grid-cols-[1.05fr_1fr] lg:items-center lg:gap-16">
+      <div>
+        <p class="eyebrow">Renovasi Interior Kantor &amp; Ruang Komersial</p>
+
+        <h1 class="text-[2.6rem] leading-[1.05] sm:text-6xl">
+          Renovasi interior kantor<br />
+          yang bisa Anda pantau<br />
+          <span class="text-brass">setiap hari.</span>
+        </h1>
+
+        <p class="mt-7 max-w-xl text-lg text-graphite">
+          Kami mengerjakan renovasi ruang kantor dan komersial di Jakarta Selatan
+          dan Tangerang Selatan — dengan standar kerja yang sama seperti proyek
+          instansi yang kami tangani.
+        </p>
+
+        <div class="mt-9">
+          <WaButton location="hero" />
+          <p class="mt-4 font-mono text-xs tracking-wide text-graphite">
+            Kami akan menanyakan lokasi, jenis ruang, dan perkiraan luas terlebih dahulu.
+          </p>
+        </div>
+      </div>
+
+      <!-- GANTI: foto proyek kantor terbaik, rasio 4:5 -->
+      <div class="slot aspect-[4/5] w-full">
+        Foto utama — hasil proyek kantor<br />rasio 4:5 &middot; min. 1200&times;1500
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ KREDIBILITAS ══════════ -->
+  <section class="border-y border-line bg-concrete">
+    <div class="wrap grid gap-10 py-14 md:grid-cols-[1.2fr_1fr] md:items-center">
+      <div>
+        <h2 class="text-2xl sm:text-3xl">
+          Dipercaya mengerjakan proyek dengan pengawasan ketat
+        </h2>
+        <p class="mt-4 max-w-lg text-graphite">
+          Kami terbiasa bekerja di lingkungan proyek yang menuntut kelengkapan
+          administrasi, ketepatan spesifikasi, dan pengawasan berlapis. Standar
+          itu yang kami bawa ke setiap proyek swasta.
+        </p>
+      </div>
+
+      <ul class="space-y-3 font-mono text-sm text-ink">
+        <li class="flex gap-3 border-b border-line pb-3">
+          <span class="text-brass">&mdash;</span>
+          Kementerian Agama Republik Indonesia
+        </li>
+        <li class="flex gap-3 border-b border-line pb-3">
+          <span class="text-brass">&mdash;</span>
+          UIN Syarif Hidayatullah Jakarta
+        </li>
+        <li class="flex gap-3 text-graphite">
+          <span class="text-brass">&mdash;</span>
+          Nilai proyek Rp 100&ndash;300 juta
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ══════════ MASALAH ══════════ -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Yang sering terjadi</p>
+
+      <h2 class="max-w-2xl text-3xl sm:text-4xl">
+        Sebagian besar masalah renovasi bukan soal kemampuan teknis
+      </h2>
+      <p class="mt-5 max-w-xl text-lg text-graphite">
+        Masalahnya hampir selalu datang dari proses yang tidak jelas.
+      </p>
+
+      <div class="mt-12 grid gap-px border border-line bg-line sm:grid-cols-2">
+        {masalah.map((m) => (
+          <div class="bg-paper p-7">
+            <h3 class="text-lg">{m.judul}</h3>
+            <p class="mt-2.5 text-graphite">{m.isi}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ SISTEM KERJA ══════════ -->
+  <section class="band border-t border-line bg-concrete">
+    <div class="wrap">
+      <p class="eyebrow">Cara kami bekerja</p>
+
+      <div class="grid gap-8 md:grid-cols-[1fr_auto] md:items-end">
+        <h2 class="max-w-2xl text-3xl sm:text-4xl">
+          Sembilan tahap, dari pengukuran sampai penagihan
+        </h2>
+        <p class="max-w-sm text-graphite">
+          Setiap proyek berjalan melalui tahapan yang sama. Anda tahu posisi
+          proyek Anda kapan pun.
+        </p>
+      </div>
+
+      <ol class="mt-14 border-t border-line">
+        {tahapan.map((t) => (
+          <li class="grid gap-x-8 gap-y-2 border-b border-line py-6 sm:grid-cols-[4rem_14rem_1fr] sm:py-7">
+            <span class="font-mono text-sm text-brass">{t.n}</span>
+            <h3 class="text-lg leading-snug">
+              {t.judul}
+              {t.tandai && (
+                <span class="ml-2 align-middle font-mono text-[0.62rem] uppercase tracking-widest text-brass">
+                  &#9679; pembeda
+                </span>
+              )}
+            </h3>
+            <p class="text-graphite">{t.isi}</p>
+          </li>
+        ))}
+      </ol>
+
+      <p class="mt-8 max-w-2xl text-graphite">
+        Tahap 07 dan 09 adalah bagian yang paling sering ditanyakan klien.
+        Keduanya kami jalankan di setiap proyek.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════ BUKTI PROSES — elemen utama ══════════ -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Bukti proses</p>
+
+      <div class="grid gap-12 lg:grid-cols-[1fr_1.15fr] lg:gap-16">
+        <div>
+          <h2 class="text-3xl sm:text-4xl">
+            Seperti ini bentuk laporan yang Anda terima
+          </h2>
+          <p class="mt-5 text-lg text-graphite">
+            Setiap proyek memiliki folder dokumentasi sendiri. Project Manager
+            memperbaruinya setiap hari kerja — foto kondisi terkini beserta
+            keterangan pekerjaan.
+          </p>
+          <p class="mt-4 text-lg text-graphite">
+            Anda tidak perlu bertanya untuk tahu progres.
+          </p>
+
+          <!-- GANTI: screenshot folder Drive, data disamarkan -->
+          <div class="slot mt-8 aspect-[16/10] w-full">
+            Screenshot folder dokumentasi<br />data klien disamarkan
+          </div>
+        </div>
+
+        <!-- Log dokumentasi -->
+        <div class="border border-line bg-concrete">
+          <div class="flex items-center justify-between border-b border-line px-5 py-3.5">
+            <span class="font-mono text-xs uppercase tracking-widest text-graphite">
+              Log Dokumentasi Proyek
+            </span>
+            <span class="font-mono text-xs text-brass">contoh</span>
+          </div>
+
+          <ul>
+            {log.map((l) => (
+              <li class="grid grid-cols-[auto_1fr_auto] items-center gap-4 border-b border-line px-5 py-4">
+                <div class="font-mono text-xs leading-tight">
+                  <div class="text-ink">{l.hari}</div>
+                  <div class="text-graphite">{l.tgl}</div>
+                </div>
+                <p class="text-sm leading-snug text-graphite">{l.ket}</p>
+                <span class="font-mono text-xs whitespace-nowrap text-brass">
+                  {l.n} foto
+                </span>
+              </li>
+            ))}
+          </ul>
+
+          <p class="px-5 py-4 font-mono text-xs leading-relaxed text-graphite">
+            Diperbarui setiap hari kerja oleh Project Manager.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CASE STUDY ══════════ -->
+  <section class="band border-y border-line bg-concrete">
+    <div class="wrap">
+      <p class="eyebrow">Studi kasus</p>
+
+      <h2 class="text-3xl sm:text-4xl">
+        Renovasi ruang kantor — Tanah Kusir, Jakarta Selatan
+      </h2>
+
+      <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <div class="slot aspect-[4/3]">Foto — kondisi awal</div>
+        <div class="slot aspect-[4/3]">Foto — hasil akhir</div>
+      </div>
+
+      <div class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
+        {['Kondisi awal', 'Kebutuhan klien', 'Lingkup pekerjaan', 'Hasil'].map((h) => (
+          <div class="bg-concrete p-6">
+            <h3 class="font-mono text-xs uppercase tracking-widest text-brass">{h}</h3>
+            <p class="mt-3 text-sm text-graphite">ISI: lihat brief bagian Section 6.</p>
+          </div>
+        ))}
+      </div>
+
+      <!-- GANTI: testimoni klien -->
+      <blockquote class="slot mt-10 min-h-[9rem] w-full max-w-3xl">
+        Testimoni klien Tanah Kusir<br />sertakan nama atau inisial dan jenis ruang
+      </blockquote>
+    </div>
+  </section>
+
+  <!-- ══════════ CAKUPAN & AREA ══════════ -->
+  <section class="band">
+    <div class="wrap">
+      <p class="eyebrow">Cakupan layanan</p>
+
+      <h2 class="text-3xl sm:text-4xl">Proyek yang kami tangani</h2>
+
+      <div class="mt-10 grid gap-10 md:grid-cols-3">
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-brass">Jenis ruang</h3>
+          <p class="mt-4 text-graphite">
+            Ruang kantor &middot; Ruang meeting &middot; Area resepsionis &middot;
+            Ruang pelatihan &middot; Ruko dan ruang komersial
+          </p>
+        </div>
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-brass">Lingkup pekerjaan</h3>
+          <p class="mt-4 text-graphite">
+            Penataan ulang tata ruang &middot; Partisi dan dinding &middot; Plafon &middot;
+            Lantai &middot; Furnitur built-in &middot; Pencahayaan &middot; Finishing
+          </p>
+        </div>
+        <div>
+          <h3 class="font-mono text-xs uppercase tracking-widest text-brass">Area layanan</h3>
+          <p class="mt-4 text-graphite">
+            Utama: Jakarta Selatan dan Tangerang Selatan. Lokasi di luar area
+            tersebut dapat kami pertimbangkan sesuai skala proyek.
+          </p>
+        </div>
+      </div>
+
+      <p class="mt-12 max-w-2xl border-l-2 border-brass pl-6 text-lg">
+        Kami menangani proyek mulai dari renovasi satu ruangan penuh. Nilai
+        proyek yang kami kerjakan umumnya berada di kisaran seratus hingga tiga
+        ratus juta rupiah.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══════════ FAQ ══════════ -->
+  <section class="band border-t border-line">
+    <div class="wrap max-w-3xl">
+      <p class="eyebrow">Pertanyaan yang sering muncul</p>
+
+      <div class="border-t border-line">
+        {faq.map((f) => (
+          <details class="group border-b border-line">
+            <summary class="flex cursor-pointer list-none items-start justify-between gap-6 py-5">
+              <span class="font-display text-lg font-semibold leading-snug">{f.q}</span>
+              <span class="mt-1 font-mono text-brass transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <p class={`pb-6 pr-10 text-graphite ${f.kosong ? 'font-mono text-sm' : ''}`}>
+              {f.a}
+            </p>
+          </details>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════ CTA PENUTUP ══════════ -->
+  <section class="band bg-ink text-paper">
+    <div class="wrap max-w-3xl text-center">
+      <h2 class="text-3xl sm:text-5xl">Mulai dari diskusi singkat</h2>
+
+      <p class="mx-auto mt-6 max-w-xl text-lg text-paper/70">
+        Ceritakan lokasi, jenis ruang, dan perkiraan luas proyek Anda. Kami akan
+        menyampaikan apakah proyek tersebut sesuai dengan layanan kami, dan
+        langkah apa yang perlu dilakukan berikutnya.
+      </p>
+      <p class="mt-4 text-lg text-paper/70">Bila cocok, kami lanjutkan ke survei lokasi.</p>
+
+      <div class="mt-10 flex justify-center">
+        <WaButton location="footer" class="!bg-paper !text-ink hover:!bg-brass hover:!text-paper" />
+      </div>
+    </div>
+  </section>
+
+  <footer class="border-t border-line py-10">
+    <div class="wrap flex flex-col gap-3 font-mono text-xs text-graphite sm:flex-row sm:justify-between">
+      <span>TOBO INTERIOR &middot; 0811-9000-0281</span>
+      <span>Jakarta Selatan &middot; Tangerang Selatan</span>
+    </div>
+  </footer>
+
+  <!-- CTA lengket di mobile -->
+  <div
+    id="sticky"
+    class="fixed inset-x-0 bottom-0 z-50 hidden border-t border-line bg-paper/95 p-3 backdrop-blur md:!hidden"
+  >
+    <WaButton location="sticky" class="w-full" />
+  </div>
+
+  <script is:inline>
+    const bar = document.getElementById('sticky');
+    const io = new IntersectionObserver(
+      ([e]) => bar.classList.toggle('hidden', e.isIntersecting),
+      { threshold: 0 }
+    );
+    io.observe(document.querySelector('header'));
+  </script>
+</Base>
