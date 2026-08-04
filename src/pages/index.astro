@@ -365,6 +365,71 @@ const faq = [
     </div>
   </section>
 
+  <!-- ══════════ PORTOFOLIO ══════════ -->
+  <section class="band border-t border-line">
+    <div class="wrap">
+      <p class="eyebrow">Portofolio proyek</p>
+
+      <h2 class="text-3xl sm:text-4xl">Sebagian proyek yang telah kami kerjakan</h2>
+      <p class="mt-5 max-w-2xl text-lg text-graphite">
+        Dari ruang kantor swasta hingga fasilitas kampus dan instansi
+        pemerintah — dikerjakan dengan standar kerja yang sama.
+      </p>
+
+      <div class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-3">
+        {[
+          {
+            src: '/images/portfolio-mushola.jpg',
+            judul: 'Mushola Fakultas Sains dan Teknologi UIN',
+            sub: 'UIN Syarif Hidayatullah Jakarta',
+          },
+          {
+            src: '/images/portfolio-senat.jpg',
+            judul: 'Renovasi Ruang Senat UIN Jakarta',
+            sub: 'UIN Syarif Hidayatullah Jakarta',
+          },
+          {
+            src: '/images/portfolio-pusdiklat.jpg',
+            judul: 'Renovasi Ruang Pusdiklat Kemenag',
+            sub: 'Kementerian Agama Republik Indonesia',
+          },
+          {
+            src: '/images/portfolio-dak.jpg',
+            judul: 'Dak Interior Fakultas Kedokteran UIN',
+            sub: 'UIN Syarif Hidayatullah Jakarta',
+          },
+          {
+            src: '/images/portfolio-toilet.jpg',
+            judul: 'Renovasi Toilet Fakultas Dakwah dan Komunikasi UIN',
+            sub: 'UIN Syarif Hidayatullah Jakarta',
+          },
+          {
+            src: '/images/portfolio-pagar.jpg',
+            judul: 'Renovasi Pagar Fakultas Ilmu Kesehatan UIN',
+            sub: 'UIN Syarif Hidayatullah Jakarta',
+          },
+        ].map((p) => (
+          <figure class="bg-paper">
+            <div class="aspect-[4/3] overflow-hidden">
+              <img
+                src={p.src}
+                alt={p.judul}
+                width="800"
+                height="600"
+                loading="lazy"
+                class="h-full w-full object-cover"
+              />
+            </div>
+            <figcaption class="p-5">
+              <p class="font-mono text-xs uppercase tracking-widest text-brass">{p.sub}</p>
+              <p class="mt-2 text-sm text-ink">{p.judul}</p>
+            </figcaption>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
   <!-- ══════════ CAKUPAN & AREA ══════════ -->
   <section class="band">
     <div class="wrap">
