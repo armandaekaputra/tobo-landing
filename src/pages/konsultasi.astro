@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 
 const PHONE = '6281190000281';
+const ADS_SEND_TO = 'AW-18371371265/5UjdCObQ9tscEIHCk7hE';
 ---
 
 <Base
@@ -138,7 +139,7 @@ const PHONE = '6281190000281';
     </div>
   </section>
 
-  <script define:vars={{ PHONE }}>
+  <script define:vars={{ PHONE, ADS_SEND_TO }}>
     const BULAN = [
       'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
       'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
@@ -174,14 +175,32 @@ const PHONE = '6281190000281';
         `Target selesai: ${formatBulan(data.get('targetSelesai'))}`,
       ].join('\n');
 
-      if (typeof window.gtag === 'function') {
-        window.gtag('event', 'whatsapp_click', {
-          event_category: 'engagement',
-          event_label: 'konsultasi_form',
-        });
+      const waUrl = `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+
+      if (typeof window.gtag !== 'function') {
+        window.location.href = waUrl;
+        return;
       }
 
-      window.location.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+      let redirected = false;
+      function goToWhatsApp() {
+        if (redirected) return;
+        redirected = true;
+        window.location.href = waUrl;
+      }
+
+      window.gtag('event', 'whatsapp_click', {
+        event_category: 'engagement',
+        event_label: 'konsultasi_form',
+      });
+
+      window.gtag('event', 'conversion', {
+        send_to: ADS_SEND_TO,
+        event_callback: goToWhatsApp,
+      });
+
+      // Fallback: kalau gtag gagal/terhambat (ad blocker dsb), tetap redirect.
+      setTimeout(goToWhatsApp, 1000);
     });
   </script>
 </Base>

@@ -6,9 +6,10 @@ const {
   description = 'TOBO Interior mengerjakan renovasi ruang kantor dan komersial dengan dokumentasi progres harian, RAB terperinci, dan pengawasan berlapis.',
 } = Astro.props;
 
-// TODO: isi sebelum deploy
-const GA4_ID = '';        // contoh: G-XXXXXXXXXX
-const ADS_ID = '';        // contoh: AW-XXXXXXXXX
+// TODO: isi GA4_ID kalau nanti mau pasang Google Analytics
+const GA4_ID = '';                    // contoh: G-XXXXXXXXXX
+const ADS_ID = 'AW-18371371265';      // Google Ads Conversion ID
+const TAG_ID = GA4_ID || ADS_ID;      // salah satu boleh kosong, tag tetap termuat
 ---
 
 <!doctype html>
@@ -35,15 +36,15 @@ const ADS_ID = '';        // contoh: AW-XXXXXXXXX
       href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
     />
 
-    {GA4_ID && (
+    {TAG_ID && (
       <>
-        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${TAG_ID}`}></script>
         <script is:inline define:vars={{ GA4_ID, ADS_ID }}>
           window.dataLayer = window.dataLayer || [];
           function gtag(){ dataLayer.push(arguments); }
           window.gtag = gtag;
           gtag('js', new Date());
-          gtag('config', GA4_ID);
+          if (GA4_ID) gtag('config', GA4_ID);
           if (ADS_ID) gtag('config', ADS_ID);
         </script>
       </>
