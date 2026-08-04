@@ -350,10 +350,27 @@ const faq = [
       </div>
 
       <div class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
-        {['Kondisi awal', 'Kebutuhan klien', 'Lingkup pekerjaan', 'Hasil'].map((h) => (
+        {[
+          {
+            h: 'Kondisi awal',
+            isi: 'Dua ruang kamar tidur dan satu ruang yang difungsikan sebagai gudang.',
+          },
+          {
+            h: 'Kebutuhan klien',
+            isi: 'Diubah menjadi 2 ruang kerja dengan 1 ruang meeting sebagai penghubung di antara keduanya. Setiap ruang kerja punya toilet sendiri; toilet di area meeting dibongkar untuk memperluas ruangan.',
+          },
+          {
+            h: 'Lingkup pekerjaan',
+            isi: 'Lantai, dinding, atap, wallboard, wall panel, list profil, plafon, hingga penataan item dekorasi.',
+          },
+          {
+            h: 'Hasil',
+            isi: '2 ruang kerja privat dan 1 ruang meeting yang saling terhubung (connecting room).',
+          },
+        ].map((s) => (
           <div class="bg-concrete p-6">
-            <h3 class="font-mono text-xs uppercase tracking-widest text-brass">{h}</h3>
-            <p class="mt-3 text-sm text-graphite">ISI: lihat brief bagian Section 6.</p>
+            <h3 class="font-mono text-xs uppercase tracking-widest text-brass">{s.h}</h3>
+            <p class="mt-3 text-sm text-graphite">{s.isi}</p>
           </div>
         ))}
       </div>
