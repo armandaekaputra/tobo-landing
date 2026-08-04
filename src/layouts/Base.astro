@@ -1,0 +1,70 @@
+---
+import '../styles/global.css';
+
+const {
+  title = 'Renovasi Interior Kantor — Jakarta Selatan & Tangerang Selatan | TOBO Interior',
+  description = 'TOBO Interior mengerjakan renovasi ruang kantor dan komersial dengan dokumentasi progres harian, RAB terperinci, dan pengawasan berlapis.',
+} = Astro.props;
+
+// TODO: isi sebelum deploy
+const GA4_ID = '';        // contoh: G-XXXXXXXXXX
+const ADS_ID = '';        // contoh: AW-XXXXXXXXX
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={Astro.site} />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content="/images/og.jpg" />
+    <meta property="og:locale" content="id_ID" />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700;800&family=IBM+Plex+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap"
+    />
+
+    {GA4_ID && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${GA4_ID}`}></script>
+        <script is:inline define:vars={{ GA4_ID, ADS_ID }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag(){ dataLayer.push(arguments); }
+          window.gtag = gtag;
+          gtag('js', new Date());
+          gtag('config', GA4_ID);
+          if (ADS_ID) gtag('config', ADS_ID);
+        </script>
+      </>
+    )}
+  </head>
+
+  <body>
+    <slot />
+
+    <!-- Pelacakan klik WhatsApp -->
+    <script is:inline>
+      document.addEventListener('click', function (e) {
+        const link = e.target.closest('a[data-wa]');
+        if (!link) return;
+        if (typeof window.gtag === 'function') {
+          window.gtag('event', 'whatsapp_click', {
+            event_category: 'engagement',
+            event_label: link.dataset.wa,
+          });
+        }
+      });
+    </script>
+  </body>
+</html>
