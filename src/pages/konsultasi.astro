@@ -1,0 +1,187 @@
+---
+import Base from '../layouts/Base.astro';
+
+const PHONE = '6281190000281';
+---
+
+<Base
+  title="Konsultasi Rencana Proyek — TOBO Interior"
+  description="Isi rencana proyek renovasi Anda, lalu lanjutkan diskusi langsung lewat WhatsApp dengan TOBO Interior."
+>
+  <header class="border-b border-line">
+    <div class="wrap flex items-center justify-between py-5">
+      <a href="/" class="flex items-center gap-2 font-display font-extrabold tracking-tight text-lg">
+        <img src="/images/logo-icon.png" alt="" width="28" height="30" class="h-[30px] w-auto" />
+        TOBO<span class="text-brass">INTERIOR</span>
+      </a>
+      <a href="/" class="font-mono text-xs uppercase tracking-widest text-graphite hover:text-brass">
+        &larr; Kembali
+      </a>
+    </div>
+  </header>
+
+  <section class="band">
+    <div class="wrap max-w-2xl">
+      <p class="eyebrow">Konsultasi</p>
+
+      <h1 class="text-3xl sm:text-4xl">Ceritakan rencana proyek Anda</h1>
+      <p class="mt-5 text-lg text-graphite">
+        Isi form singkat ini, lalu lanjutkan ke WhatsApp — pesan Anda akan
+        terisi otomatis sehingga kami langsung paham konteksnya tanpa
+        bolak-balik tanya.
+      </p>
+
+      <form id="konsultasi-form" class="mt-10 space-y-6" novalidate>
+        <div>
+          <label for="nama" class="font-mono text-xs uppercase tracking-widest text-graphite">
+            Nama
+          </label>
+          <input
+            type="text"
+            id="nama"
+            name="nama"
+            required
+            placeholder="Nama Anda"
+            class="mt-2 w-full rounded-none border border-line bg-paper px-4 py-3 text-ink"
+          />
+        </div>
+
+        <div>
+          <label for="lokasi" class="font-mono text-xs uppercase tracking-widest text-graphite">
+            Lokasi
+          </label>
+          <input
+            type="text"
+            id="lokasi"
+            name="lokasi"
+            required
+            placeholder="mis. Jakarta Selatan / Tangerang Selatan"
+            class="mt-2 w-full rounded-none border border-line bg-paper px-4 py-3 text-ink"
+          />
+        </div>
+
+        <div>
+          <label for="jenisRuang" class="font-mono text-xs uppercase tracking-widest text-graphite">
+            Jenis ruang
+          </label>
+          <select
+            id="jenisRuang"
+            name="jenisRuang"
+            required
+            class="mt-2 w-full rounded-none border border-line bg-paper px-4 py-3 text-ink"
+          >
+            <option value="" disabled selected>Pilih jenis ruang</option>
+            <option>Ruang kantor</option>
+            <option>Ruang meeting</option>
+            <option>Area resepsionis</option>
+            <option>Ruang pelatihan</option>
+            <option>Ruko / ruang komersial</option>
+            <option>Lainnya</option>
+          </select>
+        </div>
+
+        <div>
+          <label for="jumlahRuangan" class="font-mono text-xs uppercase tracking-widest text-graphite">
+            Jumlah ruangan yang ingin direnovasi
+          </label>
+          <select
+            id="jumlahRuangan"
+            name="jumlahRuangan"
+            required
+            class="mt-2 w-full rounded-none border border-line bg-paper px-4 py-3 text-ink"
+          >
+            <option value="" disabled selected>Pilih perkiraan jumlah</option>
+            <option>1 ruangan</option>
+            <option>2–3 ruangan</option>
+            <option>Lebih dari 3 ruangan / seluruh area</option>
+          </select>
+        </div>
+
+        <div class="grid gap-6 sm:grid-cols-2">
+          <div>
+            <label for="targetMulai" class="font-mono text-xs uppercase tracking-widest text-graphite">
+              Target mulai
+            </label>
+            <input
+              type="month"
+              id="targetMulai"
+              name="targetMulai"
+              required
+              class="mt-2 w-full rounded-none border border-line bg-paper px-4 py-3 text-ink"
+            />
+          </div>
+          <div>
+            <label for="targetSelesai" class="font-mono text-xs uppercase tracking-widest text-graphite">
+              Target selesai
+            </label>
+            <input
+              type="month"
+              id="targetSelesai"
+              name="targetSelesai"
+              required
+              class="mt-2 w-full rounded-none border border-line bg-paper px-4 py-3 text-ink"
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn w-full sm:w-auto" data-wa="konsultasi">
+          Lanjutkan ke WhatsApp
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+            <path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.75" stroke-linecap="square"/>
+          </svg>
+        </button>
+
+        <p id="konsultasi-error" class="hidden text-sm text-brass">
+          Mohon lengkapi semua field terlebih dahulu.
+        </p>
+      </form>
+    </div>
+  </section>
+
+  <script define:vars={{ PHONE }}>
+    const BULAN = [
+      'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni',
+      'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember',
+    ];
+
+    function formatBulan(value) {
+      if (!value) return '';
+      const [y, m] = value.split('-');
+      return `${BULAN[parseInt(m, 10) - 1]} ${y}`;
+    }
+
+    const form = document.getElementById('konsultasi-form');
+    const errorEl = document.getElementById('konsultasi-error');
+
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      if (!form.reportValidity()) {
+        errorEl.classList.remove('hidden');
+        return;
+      }
+      errorEl.classList.add('hidden');
+
+      const data = new FormData(form);
+      const message = [
+        'Halo TOBO Interior, saya ingin mendiskusikan rencana renovasi interior.',
+        '',
+        `Nama: ${data.get('nama')}`,
+        `Lokasi: ${data.get('lokasi')}`,
+        `Jenis ruang: ${data.get('jenisRuang')}`,
+        `Jumlah ruangan: ${data.get('jumlahRuangan')}`,
+        `Target mulai: ${formatBulan(data.get('targetMulai'))}`,
+        `Target selesai: ${formatBulan(data.get('targetSelesai'))}`,
+      ].join('\n');
+
+      if (typeof window.gtag === 'function') {
+        window.gtag('event', 'whatsapp_click', {
+          event_category: 'engagement',
+          event_label: 'konsultasi_form',
+        });
+      }
+
+      window.location.href = `https://wa.me/${PHONE}?text=${encodeURIComponent(message)}`;
+    });
+  </script>
+</Base>

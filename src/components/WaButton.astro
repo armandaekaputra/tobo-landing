@@ -1,27 +1,12 @@
 ---
 // Tombol CTA tunggal. Teks tidak boleh diubah antar section.
 const { location = 'hero', class: cls = '' } = Astro.props;
-
-const PHONE = '6281190000281';
-
-const MESSAGE = [
-  'Halo TOBO Interior, saya ingin mendiskusikan rencana renovasi interior.',
-  '',
-  'Lokasi: ',
-  'Jenis ruang: ',
-  'Perkiraan luas: ',
-  'Target mulai: ',
-].join('\n');
-
-const href = `https://wa.me/${PHONE}?text=${encodeURIComponent(MESSAGE)}`;
 ---
 
 <a
-  href={href}
+  href="/konsultasi"
   class={`btn ${cls}`}
   data-wa={location}
-  target="_blank"
-  rel="noopener"
 >
   Diskusikan Rencana Proyek Anda
   <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">

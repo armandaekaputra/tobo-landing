@@ -53,13 +53,13 @@ const ADS_ID = '';        // contoh: AW-XXXXXXXXX
   <body>
     <slot />
 
-    <!-- Pelacakan klik WhatsApp -->
+    <!-- Pelacakan klik tombol "Diskusikan Rencana Proyek Anda" (menuju halaman konsultasi) -->
     <script is:inline>
       document.addEventListener('click', function (e) {
         const link = e.target.closest('a[data-wa]');
         if (!link) return;
         if (typeof window.gtag === 'function') {
-          window.gtag('event', 'whatsapp_click', {
+          window.gtag('event', 'cta_click', {
             event_category: 'engagement',
             event_label: link.dataset.wa,
           });
