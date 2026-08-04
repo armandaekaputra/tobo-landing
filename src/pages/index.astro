@@ -326,25 +326,40 @@ const faq = [
         Renovasi ruang kantor — Tanah Kusir, Jakarta Selatan
       </h2>
 
-      <div class="mt-10 grid gap-4 sm:grid-cols-2">
-        <figure class="aspect-[4/3] overflow-hidden">
-          <img
-            src="/images/case-before.jpg"
-            alt="Kondisi ruang sebelum direnovasi — proyek Tanah Kusir"
-            width="1400"
-            height="1050"
-            class="h-full w-full object-cover"
-          />
-        </figure>
-        <figure class="aspect-[4/3] overflow-hidden">
-          <img
-            src="/images/case-after.jpg"
-            alt="Hasil akhir ruang kerja setelah direnovasi — proyek Tanah Kusir"
-            width="1400"
-            height="1050"
-            class="h-full w-full object-cover"
-          />
-        </figure>
+      <div class="mt-10">
+        <p class="font-mono text-xs uppercase tracking-widest text-brass">Sebelum</p>
+        <div class="mt-3 grid gap-4 sm:grid-cols-3">
+          {['case-before-1', 'case-before-2', 'case-before-3'].map((src) => (
+            <figure class="aspect-[4/3] overflow-hidden">
+              <img
+                src={`/images/${src}.jpg`}
+                alt="Kondisi ruang sebelum direnovasi — proyek Tanah Kusir"
+                width="1200"
+                height="900"
+                loading="lazy"
+                class="h-full w-full object-cover"
+              />
+            </figure>
+          ))}
+        </div>
+      </div>
+
+      <div class="mt-8">
+        <p class="font-mono text-xs uppercase tracking-widest text-brass">Sesudah</p>
+        <div class="mt-3 grid gap-4 sm:grid-cols-3">
+          {['case-after-1', 'case-after-2', 'case-after-3'].map((src) => (
+            <figure class="aspect-[4/3] overflow-hidden">
+              <img
+                src={`/images/${src}.jpg`}
+                alt="Hasil akhir ruang kerja setelah direnovasi — proyek Tanah Kusir"
+                width="1200"
+                height="901"
+                loading="lazy"
+                class="h-full w-full object-cover"
+              />
+            </figure>
+          ))}
+        </div>
       </div>
 
       <div class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 lg:grid-cols-4">
